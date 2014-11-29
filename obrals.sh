@@ -83,7 +83,7 @@ chkconfig vnstat on
 
 # install screenfetch
 cd
-wget https://github.com/walihelper/Obral-SSH/blob/master/screenfetch-dev
+wget https://github.com/walihelper/Obral-SSH/raw/master/screenfetch-dev
 mv screenfetch-dev /usr/bin/screenfetch
 chmod +x /usr/bin/screenfetch
 echo "clear" >> .bash_profile
@@ -91,13 +91,13 @@ echo "screenfetch" >> .bash_profile
 
 # install webserver
 cd
-wget -O /etc/nginx/nginx.conf "https://github.com/walihelper/Obral-SSH/blob/master/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://github.com/walihelper/Obral-SSH/raw/master/nginx.conf"
 sed -i 's/www-data/nginx/g' /etc/nginx/nginx.conf
 mkdir -p /home/vps/public_html
 echo "<pre>Script by obhystudio ( obhy.eu ) </pre>" > /home/vps/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
 rm /etc/nginx/conf.d/*
-wget -O /etc/nginx/conf.d/vps.conf "https://github.com/walihelper/Obral-SSH/blob/master/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://github.com/walihelper/Obral-SSH/raw/master/vps.conf"
 sed -i 's/apache/nginx/g' /etc/php-fpm.d/www.conf
 chmod -R +rx /home/vps
 service php-fpm restart
@@ -126,7 +126,7 @@ export EASY_RSA="${EASY_RSA:-.}"
 . /etc/openvpn/easy-rsa/2.0/build-dh
 
 
-wget -O /etc/openvpn/1194.conf "https://github.com/walihelper/Obral-SSH/blob/master/1194-centos.conf"
+wget -O /etc/openvpn/1194.conf "https://github.com/walihelper/Obral-SSH/raw/master/1194-centos.conf"
 service openvpn restart
 sysctl -w net.ipv4.ip_forward=1
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
@@ -138,7 +138,7 @@ else
       iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o eth0 -j MASQUERADE
 fi
 
-#wget -O /etc/iptables.up.rules "https://github.com/walihelper/Obral-SSH/blob/master/iptables.up.rules"
+#wget -O /etc/iptables.up.rules "https://github.com/walihelper/Obral-SSH/raw/master/iptables.up.rules"
 #sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
 #sed -i $MYIP2 /etc/iptables.up.rules;
 #iptables-restore < /etc/iptables.up.rules
@@ -149,7 +149,7 @@ service openvpn restart
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/1194-client.ovpn "https://github.com/walihelper/Obral-SSH/blob/master/1194-client.conf"
+wget -O /etc/openvpn/1194-client.ovpn "https://github.com/walihelper/Obral-SSH/raw/master/1194-client.conf"
 sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
 echo "<ca>" >> /etc/openvpn/1194-client.ovpn
 cat /etc/openvpn/easy-rsa/2.0/keys/ca.crt >> /etc/openvpn/1194-client.ovpn
@@ -175,15 +175,15 @@ screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 
 # install mrtg
 cd /etc/snmp/
-wget -O /etc/snmp/snmpd.conf "https://github.com/walihelper/Obral-SSH/blob/master/snmpd.conf"
-wget -O /root/mrtg-mem.sh "https://github.com/walihelper/Obral-SSH/blob/master/mrtg-mem.sh"
+wget -O /etc/snmp/snmpd.conf "https://github.com/walihelper/Obral-SSH/raw/master/snmpd.conf"
+wget -O /root/mrtg-mem.sh "https://github.com/walihelper/Obral-SSH/raw/master/mrtg-mem.sh"
 chmod +x /root/mrtg-mem.sh
 service snmpd restart
 chkconfig snmpd on
 snmpwalk -v 1 -c public localhost | tail
 mkdir -p /home/vps/public_html/mrtg
 cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg/mrtg.cfg public@localhost
-curl "https://github.com/walihelper/Obral-SSH/blob/master/mrtg.conf" >> /etc/mrtg/mrtg.cfg
+curl "https://github.com/walihelper/Obral-SSH/raw/master/mrtg.conf" >> /etc/mrtg/mrtg.cfg
 sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg/mrtg.cfg
 sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg/mrtg.cfg
 indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg/mrtg.cfg
@@ -228,7 +228,7 @@ chkconfig fail2ban on
 
 # install squid
 yum -y install squid
-wget -O /etc/squid/squid.conf "https://github.com/walihelper/Obral-SSH/blob/master/squid-centos.conf"
+wget -O /etc/squid/squid.conf "https://github.com/walihelper/Obral-SSH/raw/master/squid-centos.conf"
 sed -i $MYIP2 /etc/squid/squid.conf;
 service squid restart
 chkconfig squid on
@@ -251,19 +251,19 @@ chmod +x /usr/bin/bmon
 
 # install PPTP VPN
 yum install -y git
-wget -O vpn-setup-vanilla.sh "https://github.com/walihelper/Obral-SSH/blob/master/vpn-setup-vanilla.sh"
+wget -O vpn-setup-vanilla.sh "https://github.com/walihelper/Obral-SSH/raw/master/vpn-setup-vanilla.sh"
 bash vpn-setup-vanilla.sh
 iptables -t nat -A POSTROUTING -j SNAT --to-source $MYIP
 service pptpd restart
 
 # download script
 cd
-wget -O speedtest_cli.py "https://github.com/walihelper/Obral-SSH/blob/master/speedtest_cli.py"
-wget -O bench-network.sh "https://github.com/walihelper/Obral-SSH/blob/master/bench-network.sh"
-wget -O ps_mem.py "https://github.com/walihelper/Obral-SSH/blob/master/ps_mem.py
-wget -O /usr/bin/user-expire.sh "https://github.com/walihelper/Obral-SSH/blob/master/user-expire.sh"
-wget -O user-list "https://github.com/walihelper/Obral-SSH/blob/master/user-list"
-wget -O user-login.sh "https://github.com/walihelper/Obral-SSH/blob/master/user-login.sh"
+wget -O speedtest_cli.py "https://github.com/walihelper/Obral-SSH/raw/master/speedtest_cli.py"
+wget -O bench-network.sh "https://github.com/walihelper/Obral-SSH/raw/master/bench-network.sh"
+wget -O ps_mem.py "https://github.com/walihelper/Obral-SSH/raw/master/ps_mem.py
+wget -O /usr/bin/user-expire.sh "https://github.com/walihelper/Obral-SSH/raw/master/user-expire.sh"
+wget -O user-list "https://github.com/walihelper/Obral-SSH/raw/master/user-list"
+wget -O user-login.sh "https://github.com/walihelper/Obral-SSH/raw/master/user-login.sh"
 chmod +x speedtest_cli.py
 chmod +x bench-network.sh
 chmod +x ps_mem.py
